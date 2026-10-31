@@ -13,6 +13,11 @@ test('all pages load without errors, broken images, overflow, or accessibility v
   for (const file of pages) {
     await page.goto(`/${file}`);
     await page.evaluate(() => document.fonts.ready);
+    // Decode every image, including assets below the lazy-load threshold.
+    await page.locator('img').evaluateAll(images => Promise.all(images.map(image => {
+      image.loading = 'eager';
+      return image.decode();
+    })));
     await expect(page.locator('h1')).toBeVisible();
     for (const width of [1440, 1024, 768, 390, 320]) {
       await page.setViewportSize({ width, height: 900 });
@@ -104,4 +109,30 @@ test('core navigation and content remain usable without JavaScript', async ({ br
   await page.goto('http://127.0.0.1:4173/book-inspection.html');
   await expect(page.getByRole('button', { name: 'Prepare my enquiry' })).toBeDisabled();
   await context.close();
+});
+
+test('location explorer updates the correct details and supports arrow keys', async ({ page }) => {
+  await page.goto('/branches.html');
+  const morbi = page.getByRole('button', { name: 'Morbi', exact: true });
+  await morbi.click();
+  await expect(morbi).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('[data-hub-city]')).toHaveText('Morbi');
+  await expect(page.locator('[data-hub-link]')).toHaveAttribute('href', '#morbi');
+  await expect(page.locator('[data-hub-description]')).toHaveText('Wood packaging treatment and support for the ceramic industry.');
+  await page.keyboard.press('ArrowRight');
+  await expect(page.getByRole('button', { name: 'Unjha', exact: true })).toBeFocused();
+  await expect(page.locator('[data-hub-city]')).toHaveText('Unjha');
+  await page.locator('[data-hub-link]').click();
+  await expect(page).toHaveURL(/#unjha$/);
+});
+
+test('scroll animation reveals content and stops drifting when reduced motion is selected', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('.hero-copy')).toHaveClass(/is-visible/);
+  await page.locator('#services').scrollIntoViewIfNeeded();
+  await expect(page.locator('.expertise-card').first()).toHaveClass(/is-visible/);
+  await expect.poll(() => page.locator('.home-hero').evaluate(el => parseFloat(el.style.getPropertyValue('--image-shift')))).toBeGreaterThan(0);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect.poll(() => page.locator('.home-hero').evaluate(el => el.style.getPropertyValue('--image-shift'))).toBe('0px');
+  await expect(page.locator('html')).not.toHaveClass(/motion-ready/);
 });

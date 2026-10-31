@@ -11,9 +11,9 @@ Use Node.js 22+ and Python 3. Run `npm ci`, `npm run build`, then `npm start`. O
 
 ## Editing
 
-`scripts/build.mjs` contains the service catalogue, page content, and shared header/footer templates. Run `npm run build` after editing it. Commit the generated root HTML files as well; any static web host can serve them directly without Node.js.
+`scripts/build.mjs` contains the service catalogue and interior-page content. `scripts/components.mjs` contains the home page, shared header/footer, location explorer, and reusable templates. Run `npm run build` after editing either file. Commit the generated root HTML files as well; any static web host can serve them directly without Node.js.
 
-`styles.css` defines the shared color, spacing, typography, button, and responsive styles. `script.js` handles navigation, progressive scroll reveals, and enquiries. Fonts are served locally with their license files in `assets/fonts`.
+`styles.css` defines the shared color, spacing, typography, button, and responsive styles. `script.js` handles navigation, staggered scroll reveals, bounded hero image movement, the keyboard-accessible location explorer, and enquiries. Motion respects the device’s reduced-motion setting, including changes during a visit. Cross-page transitions enhance supported browsers; ordinary links work everywhere. Fonts are served locally with their license files in `assets/fonts`.
 
 The five original page URLs are preserved. Dedicated pages cover all seven treatments, inspections/quotes, certificate enquiries, About, and privacy. Existing phone numbers, email, and branch details are retained from the original source.
 
