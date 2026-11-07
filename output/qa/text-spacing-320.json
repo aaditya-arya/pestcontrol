@@ -1,0 +1,110 @@
+[
+  {
+    "file": "about.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "ant-cockroach-treatment.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "b2b-fumigation.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "book-inspection.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "branches.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "certificate.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "contact.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "container-fumigation.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "general-pest-control.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "index.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": [
+      {
+        "tag": "IMG",
+        "cls": "",
+        "right": 328
+      }
+    ]
+  },
+  {
+    "file": "pallet-treatment.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "pest-control.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "privacy.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "prophylactic-treatment.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "rodent-control.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "termite-control.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  },
+  {
+    "file": "warehouse-fumigation.html",
+    "width": 320,
+    "scroll": 320,
+    "overflow": []
+  }
+]

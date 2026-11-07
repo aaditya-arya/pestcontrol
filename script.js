@@ -5,7 +5,31 @@
   const header = document.querySelector('.site-header');
   const toggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.primary-nav');
-  const progressBar = document.getElementById('page-transition-bar');
+
+  // Grow each circle only as far as its button needs, so the full hover duration
+  // stays visible instead of an oversized circle covering the pill immediately.
+  const fillButtons = [...document.querySelectorAll('.button')].filter(button => button.querySelector('.button-arrow'));
+  const sizeButtonFill = button => {
+    const bounds = button.getBoundingClientRect();
+    const arrow = button.querySelector('.button-arrow').getBoundingClientRect();
+    if (!bounds.width || !arrow.width) return;
+    const x = arrow.left + arrow.width / 2 - bounds.left;
+    const y = arrow.top + arrow.height / 2 - bounds.top;
+    const radius = Math.hypot(Math.max(x, bounds.width - x), Math.max(y, bounds.height - y)) + 2;
+    button.style.setProperty('--button-fill-scale', String(radius / (arrow.width / 2)));
+  };
+  fillButtons.forEach(sizeButtonFill);
+  document.fonts.ready.then(() => fillButtons.forEach(sizeButtonFill));
+  if ('ResizeObserver' in window) {
+    const fillObserver = new ResizeObserver(entries => {
+      const changed = new Set(entries.map(entry => entry.target.closest('.button')));
+      changed.forEach(sizeButtonFill);
+    });
+    fillButtons.forEach(button => {
+      fillObserver.observe(button);
+      fillObserver.observe(button.querySelector('.button-arrow'));
+    });
+  }
 
   // --- Mobile Menu ---
   const setMenu = (open) => {
@@ -26,13 +50,72 @@
   nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
   window.matchMedia('(min-width: 961px)').addEventListener('change', () => setMenu(false));
 
+  // --- Sliding Active Navigation Indicator ---
+  const indicator = document.querySelector('.nav-indicator');
+  const getActiveNavLink = () => nav?.querySelector('a[aria-current="page"]:not(.button)');
+
+  const moveIndicatorTo = (target) => {
+    if (!indicator || !nav || window.innerWidth <= 960) return;
+    if (!target || !nav.contains(target)) {
+      indicator.style.setProperty('--nav-opacity', '0');
+      return;
+    }
+    const navRect = nav.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const x = targetRect.left - navRect.left;
+    const w = targetRect.width;
+    indicator.style.setProperty('--nav-x', `${x}px`);
+    indicator.style.setProperty('--nav-w', `${w}px`);
+    indicator.style.setProperty('--nav-opacity', '1');
+  };
+
+  const updateNavIndicator = () => {
+    const active = getActiveNavLink();
+    moveIndicatorTo(active);
+  };
+
+  if (nav && indicator) {
+    const regularLinks = nav.querySelectorAll('a:not(.button)');
+    regularLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => moveIndicatorTo(link));
+      link.addEventListener('focus', () => moveIndicatorTo(link));
+    });
+    nav.addEventListener('mouseleave', updateNavIndicator);
+    window.addEventListener('resize', updateNavIndicator);
+    document.fonts.ready.then(updateNavIndicator);
+  }
+
+  // Keep native page navigation, with a short press/exit response before leaving.
+  let pageNavigationPending = false;
+  document.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest('a[href]');
+    if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+    const next = new URL(link.href, location.href);
+    if (next.origin !== location.origin || !['http:', 'https:', 'file:'].includes(next.protocol)) return;
+    if (next.pathname === location.pathname && next.search === location.search) return;
+    if (reducedMotion.matches) return;
+    event.preventDefault();
+    if (pageNavigationPending) return;
+    pageNavigationPending = true;
+    link.classList.add('is-pressed');
+    document.querySelector('#main')?.classList.add('is-leaving');
+    setTimeout(() => location.assign(next.href), 160);
+  });
+  window.addEventListener('pageshow', () => {
+    pageNavigationPending = false;
+    document.querySelector('#main')?.classList.remove('is-leaving');
+    document.querySelectorAll('.is-pressed').forEach(link => link.classList.remove('is-pressed'));
+  });
+
   // --- Scroll & Reading Progress ---
   let scrollFrame = 0;
   const updateScroll = () => {
     scrollFrame = 0;
     const y = window.scrollY;
     const distance = document.documentElement.scrollHeight - window.innerHeight;
-    header?.classList.toggle('scrolled', y > 10);
+    const threshold = window.innerHeight * 0.3;
+    header?.classList.toggle('scrolled', y >= threshold);
     document.documentElement.style.setProperty('--scroll-progress', distance > 0 ? String(Math.min(1, y / distance)) : '0');
     const hero = document.querySelector('.home-hero');
     if (hero) hero.style.setProperty('--image-shift', reducedMotion.matches ? '0px' : `${Math.min(40, y * .075)}px`);
@@ -47,7 +130,7 @@
   let revealObserver = null;
   const initReveal = () => {
     if (!('IntersectionObserver' in window) || reducedMotion.matches) return;
-    document.querySelectorAll('.expertise-grid, .service-grid, .steps, .contact-grid, .intro-grid').forEach(group => {
+    document.querySelectorAll('.expertise-grid, .home-b2b-grid, .home-pest-grid, .service-grid, .branch-visual-grid, .about-divisions-grid, .steps, .contact-grid, .intro-grid').forEach(group => {
       [...group.children].filter(child => child.classList.contains('reveal')).forEach((child, i) => {
         child.style.setProperty('--reveal-delay', `${Math.min(i, 3) * 90}ms`);
       });
@@ -74,67 +157,263 @@
     }
   });
 
-  // --- Location Explorer ---
-  const initLocationExplorer = () => {
-    const hubTabs = [...document.querySelectorAll('[data-hub]')];
-    const hubPreview = document.querySelector('.hub-preview');
-    if (!hubTabs.length || !hubPreview) return;
-    hubTabs.forEach((tab, index) => {
-      tab.onclick = () => {
-        const card = document.getElementById(tab.dataset.hub);
-        if (!card) return;
-        hubTabs.forEach(button => button.setAttribute('aria-pressed', String(button === tab)));
-        hubPreview.querySelector('[data-hub-city]').textContent = card.dataset.city;
-        hubPreview.querySelector('[data-hub-type]').textContent = card.dataset.type;
-        hubPreview.querySelector('[data-hub-description]').textContent = card.dataset.description;
-        hubPreview.querySelector('[data-hub-link]').href = `#${card.id}`;
-        hubPreview.classList.remove('is-changing');
-        void hubPreview.offsetWidth;
-        hubPreview.classList.add('is-changing');
-      };
-      tab.onkeydown = event => {
-        const next = event.key === 'ArrowRight' ? (index + 1) % hubTabs.length : event.key === 'ArrowLeft' ? (index - 1 + hubTabs.length) % hubTabs.length : event.key === 'Home' ? 0 : event.key === 'End' ? hubTabs.length - 1 : -1;
-        if (next < 0) return;
-        event.preventDefault();
-        hubTabs[next].focus();
-        hubTabs[next].click();
-      };
-    });
-  };
-  initLocationExplorer();
-
-  // --- Enquiry & Certificate Forms ---
+  // --- Enquiry & Certificate Forms: Robust Validation & Clean UX ---
   const initForms = () => {
     const params = new URLSearchParams(window.location.search);
     const service = document.querySelector('#service');
     if (service && [...service.options].some(option => option.value === params.get('service'))) {
       service.value = params.get('service');
     }
+    const location = document.querySelector('#location');
+    if (location && params.get('location')) location.value = params.get('location').slice(0, 200);
+    const serviceNote = document.querySelector('[data-service-note]');
+    let serviceGuides = {};
+    try { serviceGuides = JSON.parse(document.getElementById('specs-data')?.textContent || '{}'); } catch { /* The form still works without service hints. */ }
+    const updateServiceNote = () => {
+      if (!service || !serviceNote) return;
+      const selected = serviceGuides[service.value];
+      serviceNote.hidden = !selected;
+      if (selected) {
+        serviceNote.querySelector('[data-service-name]').textContent = selected.title;
+        serviceNote.querySelector('[data-service-guidance]').textContent = selected.guidance;
+      }
+    };
+    service?.addEventListener('change', updateServiceNote);
+    updateServiceNote();
     const isQuote = params.get('request') === 'quote';
     const heading = document.querySelector('[data-form-heading]');
     if (heading && isQuote) heading.textContent = 'Request a service quote';
     const dateInput = document.querySelector('#preferred-date');
-    const now = new Date();
-    if (dateInput) dateInput.min = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    if (dateInput) dateInput.min = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+
+    // Field Error Helpers
+    const setError = (input, errorEl, msg) => {
+      input.classList.add('is-invalid');
+      input.classList.remove('is-valid');
+      input.setAttribute('aria-invalid', 'true');
+      input.setCustomValidity(msg);
+      if (errorEl) {
+        errorEl.textContent = msg;
+        errorEl.classList.add('is-visible');
+      }
+    };
+
+    const clearError = (input, errorEl, markValid = false) => {
+      input.classList.remove('is-invalid');
+      input.removeAttribute('aria-invalid');
+      input.setCustomValidity('');
+      const val = input.type === 'checkbox' ? input.checked : input.value.trim();
+      if (markValid && val) {
+        input.classList.add('is-valid');
+      } else {
+        input.classList.remove('is-valid');
+      }
+      if (errorEl) {
+        errorEl.textContent = '';
+        errorEl.classList.remove('is-visible');
+      }
+    };
+
+    // Single Field Validator
+    const validateField = (input, showError = true) => {
+      const errorEl = input.closest('.field')?.querySelector('.field-error');
+      const name = input.name;
+      const rawVal = input.value || '';
+      const val = rawVal.trim();
+
+      // Full Name Validation: Letters, spaces, dots, hyphens only - NO NUMBERS ALLOWED
+      if (name === 'name') {
+        if (!val) {
+          if (input.required && showError) {
+            setError(input, errorEl, 'Please enter your full name.');
+            return false;
+          }
+          clearError(input, errorEl);
+          return !input.required;
+        }
+        if (/\d/.test(val)) {
+          setError(input, errorEl, 'Name cannot contain numbers. Please use letters only.');
+          return false;
+        }
+        if (val.length < 2) {
+          if (showError) setError(input, errorEl, 'Name must be at least 2 characters.');
+          return false;
+        }
+        if (!/^[\p{L}\p{M}\s.'\-\/]+$/u.test(val)) {
+          setError(input, errorEl, 'Please enter a valid name using letters only.');
+          return false;
+        }
+        clearError(input, errorEl, true);
+        return true;
+      }
+
+      // Phone Number Validation: Digits and formatting symbols only - NO LETTERS ALLOWED
+      if (name === 'phone') {
+        if (!val) {
+          if (input.required && showError) {
+            setError(input, errorEl, 'Please enter your direct phone number.');
+            return false;
+          }
+          clearError(input, errorEl);
+          return !input.required;
+        }
+        if (/[a-zA-Z]/.test(rawVal)) {
+          setError(input, errorEl, 'Phone number cannot contain letters. Please enter digits only.');
+          return false;
+        }
+        const digits = rawVal.replace(/\D/g, '');
+        if (digits.length < 7 || digits.length > 15) {
+          if (showError) setError(input, errorEl, 'Please enter a valid phone number (7 to 15 digits, e.g. +91 98765 43210).');
+          return false;
+        }
+        clearError(input, errorEl, true);
+        return true;
+      }
+
+      // Email Validation (Optional or Required)
+      if (name === 'email') {
+        if (!val) {
+          if (input.required && showError) {
+            setError(input, errorEl, 'Please enter a work email address.');
+            return false;
+          }
+          clearError(input, errorEl);
+          return !input.required;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)) {
+          if (showError) setError(input, errorEl, 'Please enter a valid email address (e.g. operations@company.com).');
+          return false;
+        }
+        clearError(input, errorEl, true);
+        return true;
+      }
+
+      // Treatment Location Validation
+      if (name === 'location') {
+        if (!val) {
+          if (input.required && showError) {
+            setError(input, errorEl, 'Please enter the treatment location or city.');
+            return false;
+          }
+          clearError(input, errorEl);
+          return !input.required;
+        }
+        if (val.length < 3) {
+          if (showError) setError(input, errorEl, 'Location must be at least 3 characters.');
+          return false;
+        }
+        if (!/[a-zA-Z]/.test(val)) {
+          setError(input, errorEl, 'Location must include a city or facility name (e.g. Mundra Port CFS).');
+          return false;
+        }
+        clearError(input, errorEl, true);
+        return true;
+      }
+
+      // Certificate / Container Reference Validation
+      if (name === 'reference') {
+        if (!val) {
+          if (input.required && showError) {
+            setError(input, errorEl, 'Please enter the certificate or container reference.');
+            return false;
+          }
+          clearError(input, errorEl);
+          return !input.required;
+        }
+        if (val.length < 3) {
+          if (showError) setError(input, errorEl, 'Reference must be at least 3 characters.');
+          return false;
+        }
+        clearError(input, errorEl, true);
+        return true;
+      }
+
+      // Service Select Validation
+      if (name === 'service') {
+        if (input.required && !val) {
+          if (showError) setError(input, errorEl, 'Please select a required service.');
+          return false;
+        }
+        clearError(input, errorEl, true);
+        return true;
+      }
+
+      // Consent Checkbox Validation
+      if (name === 'consent') {
+        if (input.required && !input.checked) {
+          if (showError) setError(input, errorEl, 'Please check this box to agree to proceed.');
+          return false;
+        }
+        clearError(input, errorEl, true);
+        return true;
+      }
+
+      // Generic required field fallback
+      if (input.required && !val) {
+        if (showError) setError(input, errorEl, 'This field is required.');
+        return false;
+      }
+      clearError(input, errorEl, Boolean(val));
+      return true;
+    };
 
     document.querySelectorAll('[data-enquiry]').forEach(form => {
-      const phone = form.querySelector('[name="phone"]');
-      const validatePhone = () => {
-        if (!phone) return;
-        const digits = phone.value.replace(/\D/g, '');
-        phone.setCustomValidity(digits.length >= 7 && digits.length <= 15 ? '' : 'Enter a phone number with 7 to 15 digits.');
-      };
-      phone?.addEventListener('input', validatePhone);
+      const inputs = form.querySelectorAll('input, select, textarea');
+
+      // Attach live validation on typing & blur
+      inputs.forEach(input => {
+        // Immediate feedback on typing if forbidden character or previously invalid
+        input.addEventListener('input', () => {
+          const val = input.value || '';
+          const hasForbidden = (input.name === 'name' && /\d/.test(val)) ||
+                               (input.name === 'phone' && /[a-zA-Z]/.test(val));
+          if (hasForbidden || input.classList.contains('is-invalid')) {
+            validateField(input, true);
+          } else {
+            validateField(input, false);
+          }
+        });
+
+        // Thorough validation on leaving field
+        input.addEventListener('blur', () => {
+          if (input.value || input.required) {
+            validateField(input, true);
+          }
+        });
+
+        // For select dropdowns and checkboxes, validate on change
+        input.addEventListener('change', () => {
+          validateField(input, true);
+        });
+      });
+
       form.onsubmit = event => {
         event.preventDefault();
-        validatePhone();
-        ['name', 'location', 'reference'].forEach(name => {
-          const field = form.elements.namedItem(name);
-          if (field) field.value = field.value.trim();
+
+        // Validate all form fields
+        let isFormValid = true;
+        let firstInvalid = null;
+
+        inputs.forEach(input => {
+          const valid = validateField(input, true);
+          if (!valid) {
+            isFormValid = false;
+            if (!firstInvalid) firstInvalid = input;
+          }
         });
-        if (!form.reportValidity()) return;
+
+        if (!isFormValid) {
+          if (firstInvalid) {
+            const optionalSection = firstInvalid.closest('details');
+            if (optionalSection) optionalSection.open = true;
+            firstInvalid.focus({ preventScroll: false });
+            firstInvalid.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'center' });
+          }
+          return;
+        }
+
         const data = new FormData(form);
-        const lines = [form.dataset.enquiry === 'certificate' ? 'Certificate enquiry — ID Pest Control & Ecomax' : isQuote ? 'Service quote request — ID Pest Control & Ecomax' : 'Inspection request — ID Pest Control & Ecomax'];
+        const lines = [form.dataset.enquiry === 'certificate' ? 'Certificate enquiry — ID Pest Control Services' : isQuote ? 'Service quote request — ID Pest Control Services' : 'Service enquiry — ID Pest Control Services'];
         const labels = { reference: 'Certificate reference', name: 'Name', phone: 'Phone', email: 'Email', company: 'Company', location: 'Location', date: 'Preferred date', message: 'Details' };
         for (const [name, label] of Object.entries(labels)) {
           const value = data.get(name)?.toString().trim();
@@ -156,16 +435,20 @@
         result.focus({ preventScroll: true });
         result.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'center' });
       };
+
       form.oninput = () => {
         const res = form.querySelector('.enquiry-result');
-        if (res) res.hidden = true;
-        document.querySelectorAll('[data-form-step]').forEach(step => {
-          const current = step.dataset.formStep === '1';
-          step.classList.toggle('is-current', current);
-          if (current) step.setAttribute('aria-current', 'step');
-          else step.removeAttribute('aria-current');
-        });
+        if (res && !res.hidden) {
+          res.hidden = true;
+          document.querySelectorAll('[data-form-step]').forEach(step => {
+            const current = step.dataset.formStep === '1';
+            step.classList.toggle('is-current', current);
+            if (current) step.setAttribute('aria-current', 'step');
+            else step.removeAttribute('aria-current');
+          });
+        }
       };
+
       const submitBtn = form.querySelector('button[type="submit"]');
       if (submitBtn) submitBtn.disabled = false;
     });
@@ -214,17 +497,29 @@
 
     drawerBackdrop.classList.add('is-open');
     drawer.classList.add('is-open');
+    drawer.inert = false;
     drawer.setAttribute('aria-hidden', 'false');
     drawerBackdrop.setAttribute('aria-hidden', 'false');
-    drawerClose?.focus();
+    document.querySelector('main').inert = true;
+    document.querySelector('.site-header').inert = true;
+    document.querySelector('.site-footer').inert = true;
+    document.body.classList.add('drawer-open');
+    requestAnimationFrame(() => {
+      if (drawer.classList.contains('is-open')) drawerClose?.focus({ preventScroll: true });
+    });
   };
 
   const closeSpecs = () => {
     if (!drawer || !drawerBackdrop) return;
     drawerBackdrop.classList.remove('is-open');
     drawer.classList.remove('is-open');
+    drawer.inert = true;
     drawer.setAttribute('aria-hidden', 'true');
     drawerBackdrop.setAttribute('aria-hidden', 'true');
+    document.querySelector('main').inert = false;
+    document.querySelector('.site-header').inert = false;
+    document.querySelector('.site-footer').inert = false;
+    document.body.classList.remove('drawer-open');
     if (lastActiveTrigger && typeof lastActiveTrigger.focus === 'function') {
       lastActiveTrigger.focus();
     }
@@ -233,6 +528,13 @@
   drawerClose?.addEventListener('click', closeSpecs);
   drawerBackdrop?.addEventListener('click', closeSpecs);
   document.addEventListener('keydown', (event) => {
+    if (event.key === 'Tab' && drawer?.classList.contains('is-open')) {
+      const controls = [...drawer.querySelectorAll('button, a[href], [tabindex="0"]')];
+      const first = controls[0];
+      const last = controls.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
     if (event.key === 'Escape' && drawer?.classList.contains('is-open')) {
       closeSpecs();
     }
@@ -247,178 +549,4 @@
     }
   });
 
-  // --- Initial Starter Logo Animation (First Visit Only, ~3s) ---
-  const initLogoIntro = () => {
-    const intro = document.getElementById('logo-intro');
-    const introBadge = document.getElementById('logo-intro-badge');
-    const skipBtn = document.getElementById('logo-intro-skip');
-    const headerBrand = document.querySelector('.site-header .brand');
-    if (!intro || !introBadge || !headerBrand) return;
-
-    // Check if previously seen in this session or prefers reduced motion
-    const seen = sessionStorage.getItem('id_pest_intro_seen');
-    if (seen === '1' || reducedMotion.matches) {
-      intro.classList.add('is-settled');
-      intro.style.display = 'none';
-      return;
-    }
-
-    const settleIntro = () => {
-      sessionStorage.setItem('id_pest_intro_seen', '1');
-      intro.classList.add('is-settled');
-      setTimeout(() => { intro.style.display = 'none'; }, 750);
-    };
-
-    skipBtn?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      settleIntro();
-    });
-
-    intro.addEventListener('click', settleIntro);
-
-    // Sequence: Hold center stage for 1.1s, then fly to top-left header logo over 1.4s
-    setTimeout(() => {
-      if (intro.classList.contains('is-settled')) return;
-      const targetRect = headerBrand.getBoundingClientRect();
-      const badgeRect = introBadge.getBoundingClientRect();
-      const deltaX = targetRect.left - badgeRect.left;
-      const deltaY = targetRect.top - badgeRect.top;
-      const scale = Math.max(0.35, Math.min(0.65, targetRect.height / badgeRect.height));
-
-      introBadge.style.transition = 'transform 1.35s cubic-bezier(.16, 1, .3, 1), opacity .5s ease';
-      introBadge.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
-
-      const caption = intro.querySelector('.logo-intro-caption');
-      if (caption) caption.style.opacity = '0';
-      const backdrop = intro.querySelector('.logo-intro-backdrop');
-      if (backdrop) backdrop.style.opacity = '0';
-
-      // Settle smoothly
-      setTimeout(() => {
-        settleIntro();
-      }, 1450);
-    }, 1100);
-  };
-  initLogoIntro();
-
-  // --- Fluid Page Navigation Router (Eliminating Quick Snaps) ---
-  const rebindPage = () => {
-    updateScroll();
-    initReveal();
-    initLocationExplorer();
-    initForms();
-    setMenu(false);
-  };
-
-  const navigateTo = async (url, push = true) => {
-    if (reducedMotion.matches) {
-      window.location.href = url;
-      return;
-    }
-    try {
-      if (progressBar) {
-        progressBar.classList.add('is-loading');
-        progressBar.style.width = '65%';
-      }
-      const main = document.querySelector('#main');
-      if (main) main.classList.add('page-transition-exit');
-
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const html = await response.text();
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      const newMain = doc.querySelector('#main');
-      if (!newMain || !main) {
-        window.location.href = url;
-        return;
-      }
-
-      document.title = doc.title;
-      if (push) history.pushState(null, '', url);
-
-      // Update primary navigation active state
-      const targetPath = new URL(url).pathname.split('/').pop() || 'index.html';
-      document.querySelectorAll('.primary-nav a').forEach(a => {
-        const href = a.getAttribute('href');
-        const isActive = (href === targetPath) ||
-          (/^(b2b-|container-|pallet-|warehouse-)/.test(targetPath) && href === 'b2b-fumigation.html') ||
-          (/^(commercial-|termite-|rodent-|general-)/.test(targetPath) && href === 'pest-control.html');
-        if (isActive) a.setAttribute('aria-current', 'page');
-        else a.removeAttribute('aria-current');
-      });
-
-      // Swap main content
-      main.innerHTML = newMain.innerHTML;
-      main.className = newMain.className;
-
-      // Smoothly place viewport
-      const targetHash = new URL(url).hash;
-      if (targetHash) {
-        const targetEl = document.querySelector(targetHash);
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'instant' });
-        else window.scrollTo(0, 0);
-      } else {
-        window.scrollTo(0, 0);
-      }
-
-      if (progressBar) progressBar.style.width = '100%';
-      main.classList.remove('page-transition-exit');
-      main.classList.add('page-transition-enter');
-
-      setTimeout(() => {
-        main.classList.remove('page-transition-enter');
-        if (progressBar) {
-          progressBar.classList.remove('is-loading');
-          progressBar.style.width = '0%';
-        }
-      }, 380);
-
-      rebindPage();
-    } catch (err) {
-      console.warn('Navigation transition fallback:', err);
-      window.location.href = url;
-    }
-  };
-
-  document.addEventListener('click', (event) => {
-    const link = event.target.closest('a');
-    if (!link) return;
-    const href = link.getAttribute('href');
-    if (!href) return;
-
-    if (
-      link.target === '_blank' ||
-      link.hasAttribute('download') ||
-      event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
-      href.startsWith('mailto:') ||
-      href.startsWith('tel:') ||
-      href.startsWith('https://') ||
-      href.startsWith('http://') ||
-      href.startsWith('//') ||
-      href.startsWith('#') ||
-      href.startsWith('javascript:')
-    ) {
-      return;
-    }
-
-    const targetUrl = new URL(link.href, window.location.href);
-    if (targetUrl.origin !== window.location.origin) return;
-
-    // Same-page link with no hash: smoothly scroll to top
-    if (targetUrl.pathname === window.location.pathname && !targetUrl.hash && !targetUrl.search) {
-      event.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
-    // Intercept internal page navigation for fluid transition
-    event.preventDefault();
-    closeSpecs();
-    navigateTo(targetUrl.href);
-  });
-
-  window.addEventListener('popstate', () => {
-    closeSpecs();
-    navigateTo(window.location.href, false);
-  });
 })();

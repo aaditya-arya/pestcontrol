@@ -1,0 +1,126 @@
+{
+  "mode": "built-in imagegen",
+  "assets": [
+    {
+      "key": "container-fumigation-hover",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. An alternate container fumigation service view: a single closed dark green intermodal shipping container at an Indian logistics yard. Three-quarter view with its full doors prominent, an Indian technician in plain navy uniform at one side reviewing a handheld monitoring instrument and clipboard. A small closed equipment case nearby. Port cranes and a few containers softly behind. No gas release or smoke. Visually different from a close-up of men taping container doors.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-03ed99da-f9f7-41c8-8597-bd6f844a9e36.png",
+      "master": "output/imagegen/container-fumigation-hover.png",
+      "websiteFiles": [
+        "assets/images/container-fumigation-hover.jpg",
+        "assets/images/container-fumigation-hover.webp",
+        "assets/images/container-fumigation-hover-640.webp"
+      ]
+    },
+    {
+      "key": "pallet-treatment-hover",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. An alternate wooden pallet and box fumigation service view: neat stacks of fresh timber shipping pallets and large wooden export packing crates inside an Indian factory loading bay. Eye-level three-quarter view, warm wood grain prominent, one Indian worker in a plain blue shirt inspecting the corner of a wooden crate. Forklift far in background, no made-up certification stamps. Wood packaging is the main subject.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-ab01a7d1-a32e-42b5-80fa-398f33916a33.png",
+      "master": "output/imagegen/pallet-treatment-hover.png",
+      "websiteFiles": [
+        "assets/images/pallet-treatment-hover.jpg",
+        "assets/images/pallet-treatment-hover.webp",
+        "assets/images/pallet-treatment-hover-640.webp"
+      ]
+    },
+    {
+      "key": "warehouse-fumigation-hover",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. An alternate commodity stack fumigation service view: wide interior of a Gujarat godown with one large rectangular stack neatly covered by a deep green gas-tight sheet, weighted edges visible, beside orderly rows of tan jute sacks of grain and spices. No people needed. Daylight from high warehouse openings, clear storage context. Strong sense of covered agricultural goods and a tidy Indian warehouse, no smoke.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-2673d268-473a-4b50-a78e-a86ab9f340ad.png",
+      "master": "output/imagegen/warehouse-fumigation-hover.png",
+      "websiteFiles": [
+        "assets/images/warehouse-fumigation-hover.jpg",
+        "assets/images/warehouse-fumigation-hover.webp",
+        "assets/images/warehouse-fumigation-hover-640.webp"
+      ]
+    },
+    {
+      "key": "termite-control-hover",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. An alternate anti-termite treatment service view: an Indian technician in plain navy long-sleeve uniform kneeling beside a wooden door frame and the floor-wall junction inside a modest well-kept Indian home, examining the wood with a small inspection torch. A closed service bag rests nearby. Tiled floor, real plaster walls, natural window light. Focus on woodwork inspection, not a container yard or a factory.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-16e48bca-21c4-4ce9-997c-0d8aaddfcaf9.png",
+      "master": "output/imagegen/termite-control-hover.png",
+      "websiteFiles": [
+        "assets/images/termite-control-hover.jpg",
+        "assets/images/termite-control-hover.webp",
+        "assets/images/termite-control-hover-640.webp"
+      ]
+    },
+    {
+      "key": "ant-cockroach-treatment-hover",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. An alternate ant and cockroach control service view: Indian technician in plain navy collared uniform and blue nitrile gloves inspecting a discreet gel bait applicator beside the hinge and lower edge of a kitchen cabinet in a clean Indian commercial kitchen. Close but environmental composition with stainless work surfaces and a tiled floor, food stored away, no insect close-ups, no spraying, no helmet or fluorescent vest.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-a53d9e6a-b4c8-42bb-a2c5-9aa496495402.png",
+      "master": "output/imagegen/ant-cockroach-treatment-hover.png",
+      "websiteFiles": [
+        "assets/images/ant-cockroach-treatment-hover.jpg",
+        "assets/images/ant-cockroach-treatment-hover.webp",
+        "assets/images/ant-cockroach-treatment-hover-640.webp"
+      ]
+    },
+    {
+      "key": "general-pest-control-hover",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. An alternate general pest control service view: an Indian field technician in plain navy uniform holding a closed service bag and a checklist while inspecting a clean office or small factory corridor in Gujarat. Include door thresholds, skirting and a utility access area as the inspection focus. Bright realistic Indian workplace, no fumigation container, no heavy machinery glamour, no active spraying or fog.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-4d4d4965-01dd-48d7-baf0-7e36ef69450a.png",
+      "master": "output/imagegen/general-pest-control-hover.png",
+      "websiteFiles": [
+        "assets/images/general-pest-control-hover.jpg",
+        "assets/images/general-pest-control-hover.webp",
+        "assets/images/general-pest-control-hover-640.webp"
+      ]
+    },
+    {
+      "key": "rodent-control-hover",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. An alternate rodent control service view: close environmental view of a sturdy black tamper-resistant rodent monitoring station beside a warehouse wall and roller shutter in an Indian industrial yard. An Indian technician in plain navy uniform and gloves crouches at one side inspecting the closed station and noting observations. No dead animals, poisons, gore, exaggerated rats, smoke, helmet or high-visibility vest.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-40a97f7f-73e0-47cc-a5b2-4f1931872214.png",
+      "master": "output/imagegen/rodent-control-hover.png",
+      "websiteFiles": [
+        "assets/images/rodent-control-hover.jpg",
+        "assets/images/rodent-control-hover.webp",
+        "assets/images/rodent-control-hover-640.webp"
+      ]
+    },
+    {
+      "key": "prophylactic-treatment-hover",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. An alternate prophylactic preventive pest treatment service view: a clean empty Indian warehouse ready for fresh stock, broad swept concrete floor, tall roof beams, empty loading area and only a few neatly arranged pallets. An Indian technician in a plain blue collared uniform is inspecting the floor perimeter with a closed kit and checklist. Emphasise EMPTY STORAGE and preparation before goods arrive; no grain stacks, smoke or active chemical application.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-fadbfd7f-d447-42c7-8c39-723a0d3d1895.png",
+      "master": "output/imagegen/prophylactic-treatment-hover.png",
+      "websiteFiles": [
+        "assets/images/prophylactic-treatment-hover.jpg",
+        "assets/images/prophylactic-treatment-hover.webp",
+        "assets/images/prophylactic-treatment-hover-640.webp"
+      ]
+    },
+    {
+      "key": "location-mundra",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. A representative wide editorial view of the Mundra coastal port region in Kutch, Gujarat, India. A busy modern container terminal with tall blue ship-to-shore gantry cranes, stacked cargo containers, a cargo vessel and Indian freight trucks on broad service lanes; flat dry coastal landscape and hazy Arabian Sea horizon. Architecture and climate should feel like Gujarat, not Europe. No close-up service workers, no company office, no text. Landscape service-area image, convincing industrial context.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-ae492e2e-6008-4b37-ab46-b1bd322c8b8d.png",
+      "master": "output/imagegen/location-mundra.png",
+      "websiteFiles": [
+        "assets/images/location-mundra.jpg",
+        "assets/images/location-mundra.webp",
+        "assets/images/location-mundra-640.webp"
+      ]
+    },
+    {
+      "key": "location-morbi",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. A representative wide editorial photograph of Morbi's ceramic manufacturing belt in Gujarat, India. A real-looking industrial ceramic tile factory complex, long low corrugated warehouses, tile packing crates and wrapped ceramic pallets in a loading yard, an Indian goods truck and dry sunlit industrial access road. Background kiln chimneys and factory roofs convey a ceramic industry city. No container-port cranes, no staged fumigation technician, no fictional company branding or signs. Landscape location image.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-5083da06-3b23-4369-b4f1-6b251f9dfd0d.png",
+      "master": "output/imagegen/location-morbi.png",
+      "websiteFiles": [
+        "assets/images/location-morbi.jpg",
+        "assets/images/location-morbi.webp",
+        "assets/images/location-morbi-640.webp"
+      ]
+    },
+    {
+      "key": "location-unjha",
+      "prompt": "Use case: photorealistic-natural. Asset: premium Indian pest control company website photograph, landscape 16:9. Create one coherent realistic editorial photograph, natural daylight, documentary detail, understated forest green and navy palette, natural colours. No text, logos, captions, watermark, graphics, collage or illustration. People, if any, must look Indian and wear plain navy or blue long-sleeve collared work uniforms and trousers, no orange or fluorescent reflective vests and no hard hats. Show an inspection/planning moment, not active release of chemicals. Keep the relevant service subject clear and large enough to read in a website card. A representative wide editorial photograph of an agricultural wholesale market and godown district in Unjha, Gujarat, India. Real-looking APMC-style market yard with low warehouse shopfronts, orderly jute sacks of cumin and other agricultural commodities on raised loading platforms, Indian small goods trucks and traders in ordinary Indian clothes. Warm dry North Gujarat daylight, authentic Gujarati market atmosphere. No fake readable signs, no close-up fumigation operator or covered treatment stack, no company office or logos.",
+      "source": "C:\\Users\\AADITYA\\.codex\\generated_images\\01a1b617-9d1e-7d33-8d64-7ed4a4d5328d\\exec-578acdfe-81a9-4d90-a7e1-7132a5ffc88b.png",
+      "master": "output/imagegen/location-unjha.png",
+      "websiteFiles": [
+        "assets/images/location-unjha.jpg",
+        "assets/images/location-unjha.webp",
+        "assets/images/location-unjha-640.webp"
+      ]
+    }
+  ]
+}

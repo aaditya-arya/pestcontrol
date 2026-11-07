@@ -1,0 +1,15 @@
+{
+  "tool": "Built-in image_gen",
+  "edits": [
+    {
+      "asset": "pallet",
+      "source": "C:/Users/AADITYA/Desktop/pest-control-website/assets/images/pallet-box-fumigation.jpg",
+      "prompt": "Use case: precise-object-edit. Edit the supplied photograph for the existing Indian pest control company website. Remove ONLY the foreground man's yellow hard hat including its chin strap, and his orange high-visibility reflective safety vest. Reveal a natural short black hairstyle appropriate to the same man. He must remain fully dressed in his existing blue long-sleeve collared work shirt and dark trousers, with believable continuous shirt fabric beneath the removed vest. Keep his face, Indian identity, age, body shape, expression, clear eyeglasses, pose, hands, wristwatch, tablet, pen and gloves unchanged. Preserve the warehouse, wooden pallets and crates, forklift, background people, signs, camera angle, framing, lighting, colours and photo realism. Do not add logos, text, helmets, reflective strips or replacement safety vests. Keep the full original wide landscape composition, no cropping, no website overlay. Opaque photograph."
+    },
+    {
+      "asset": "about",
+      "source": "C:/Users/AADITYA/Desktop/pest-control-website/assets/images/about_indian_ops.jpg",
+      "prompt": "Use case: precise-object-edit. Edit the supplied Indian container-yard photograph for the existing pest control company website. Remove ONLY both foreground men's white hard hats including chin straps and their reflective high-visibility vests: the orange vest on the older man at left and the lime green vest on the younger man at right. Both men must remain fully dressed in the existing dark navy blue collared long-sleeve work uniforms and trousers. Reconstruct believable continuous dark blue shirt fabric under the removed vests. Reveal natural short hair: black with some grey for the older man, short black hair for the younger man. Preserve both men's exact faces, Indian identities, ages, facial hair, expressions, skin tones, body shapes, poses, hands, clipboard, pen, handheld gas-monitoring instrument, and existing uniform sleeve patches. Keep all container-yard surroundings, machinery, perspective, wide landscape framing, daylight and realistic photographic texture unchanged. Do not add logos or text, helmets, reflective strips or replacement vests. No cropping, no website overlays. Opaque photograph."
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+[
+  {
+    "scroll": 0,
+    "text": "Home",
+    "contrast": 8.49
+  },
+  {
+    "scroll": 0,
+    "text": "Fumigation",
+    "contrast": 8.29
+  },
+  {
+    "scroll": 0,
+    "text": "Pest control",
+    "contrast": 7.73
+  },
+  {
+    "scroll": 0,
+    "text": "Locations",
+    "contrast": 7.2
+  },
+  {
+    "scroll": 0,
+    "text": "About",
+    "contrast": 7.02
+  },
+  {
+    "scroll": 130,
+    "text": "Home",
+    "contrast": 8.5
+  },
+  {
+    "scroll": 130,
+    "text": "Fumigation",
+    "contrast": 8.38
+  },
+  {
+    "scroll": 130,
+    "text": "Pest control",
+    "contrast": 7.42
+  },
+  {
+    "scroll": 130,
+    "text": "Locations",
+    "contrast": 7.39
+  },
+  {
+    "scroll": 130,
+    "text": "About",
+    "contrast": 7.02
+  },
+  {
+    "scroll": 260,
+    "text": "Home",
+    "contrast": 9.67
+  },
+  {
+    "scroll": 260,
+    "text": "Fumigation",
+    "contrast": 8.61
+  },
+  {
+    "scroll": 260,
+    "text": "Pest control",
+    "contrast": 8.83
+  },
+  {
+    "scroll": 260,
+    "text": "Locations",
+    "contrast": 8.31
+  },
+  {
+    "scroll": 260,
+    "text": "About",
+    "contrast": 7.47
+  }
+]

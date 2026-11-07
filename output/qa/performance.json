@@ -1,0 +1,113 @@
+{
+  "profile": "Installed Chrome; 390x844 mobile viewport, DPR 2, cold cache, 1.6 Mbps down, 150ms latency, 4x CPU slowdown; local server",
+  "limitations": "Single lab run per page, not field Core Web Vitals or a Lighthouse score. INP is not measured.",
+  "results": [
+    {
+      "file": "index.html",
+      "lcp": 2304,
+      "cls": 0,
+      "visibility": "visible",
+      "resources": [
+        {
+          "name": "dm-sans.woff2",
+          "bytes": 37232
+        },
+        {
+          "name": "styles.css",
+          "bytes": 94807
+        },
+        {
+          "name": "script.js",
+          "bytes": 23773
+        },
+        {
+          "name": "hero_b2b_page.webp",
+          "bytes": 173226
+        },
+        {
+          "name": "container-fumigation.webp",
+          "bytes": 143346
+        },
+        {
+          "name": "container-fumigation-hover.webp",
+          "bytes": 107944
+        },
+        {
+          "name": "pallet-box-fumigation.webp",
+          "bytes": 144428
+        },
+        {
+          "name": "pallet-treatment-hover.webp",
+          "bytes": 119262
+        },
+        {
+          "name": "warehouse-fumigation-hover.webp",
+          "bytes": 140574
+        },
+        {
+          "name": "stack-fumigation.webp",
+          "bytes": 179278
+        },
+        {
+          "name": "favicon.svg",
+          "bytes": 736
+        }
+      ],
+      "domContentLoaded": 2177.3000000044703
+    },
+    {
+      "file": "container-fumigation.html",
+      "lcp": 1948,
+      "cls": 0,
+      "visibility": "visible",
+      "resources": [
+        {
+          "name": "dm-sans.woff2",
+          "bytes": 37232
+        },
+        {
+          "name": "styles.css",
+          "bytes": 94807
+        },
+        {
+          "name": "script.js",
+          "bytes": 23773
+        },
+        {
+          "name": "container-fumigation.webp",
+          "bytes": 143346
+        },
+        {
+          "name": "favicon.svg",
+          "bytes": 736
+        }
+      ],
+      "domContentLoaded": 1836.1000000014901
+    },
+    {
+      "file": "book-inspection.html",
+      "lcp": 1648,
+      "cls": 0,
+      "visibility": "visible",
+      "resources": [
+        {
+          "name": "dm-sans.woff2",
+          "bytes": 37232
+        },
+        {
+          "name": "styles.css",
+          "bytes": 94807
+        },
+        {
+          "name": "script.js",
+          "bytes": 23773
+        },
+        {
+          "name": "favicon.svg",
+          "bytes": 736
+        }
+      ],
+      "domContentLoaded": 1615.8999999985099
+    }
+  ]
+}
